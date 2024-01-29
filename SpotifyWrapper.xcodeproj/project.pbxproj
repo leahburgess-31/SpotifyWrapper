@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		080861252B677BBC00EB6EB7 /* TrackCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080861242B677BBC00EB6EB7 /* TrackCard.swift */; };
+		080861282B678D4D00EB6EB7 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = 080861272B678D4D00EB6EB7 /* URLImage */; };
 		08CF20B82B673DC20053E7D2 /* SpotifyWrapperApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08CF20B72B673DC20053E7D2 /* SpotifyWrapperApp.swift */; };
 		08CF20BC2B673DC30053E7D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08CF20BB2B673DC30053E7D2 /* Assets.xcassets */; };
 		08CF20BF2B673DC30053E7D2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08CF20BE2B673DC30053E7D2 /* Preview Assets.xcassets */; };
@@ -21,7 +21,6 @@
 
 /* Begin PBXFileReference section */
 		080861212B6753B200EB6EB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		080861242B677BBC00EB6EB7 /* TrackCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackCard.swift; sourceTree = "<group>"; };
 		08CF20B42B673DC20053E7D2 /* SpotifyWrapper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpotifyWrapper.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08CF20B72B673DC20053E7D2 /* SpotifyWrapperApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotifyWrapperApp.swift; sourceTree = "<group>"; };
 		08CF20BB2B673DC30053E7D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -38,6 +37,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				08CF20D42B673FA20053E7D2 /* KeychainAccess in Frameworks */,
+				080861282B678D4D00EB6EB7 /* URLImage in Frameworks */,
 				08CF20C72B673E160053E7D2 /* SpotifyAPI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,7 +59,6 @@
 			children = (
 				08CF20CB2B673F340053E7D2 /* LoginView.swift */,
 				08CF20CC2B673F340053E7D2 /* RootView.swift */,
-				080861242B677BBC00EB6EB7 /* TrackCard.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -120,6 +119,7 @@
 			packageProductDependencies = (
 				08CF20C62B673E160053E7D2 /* SpotifyAPI */,
 				08CF20D32B673FA20053E7D2 /* KeychainAccess */,
+				080861272B678D4D00EB6EB7 /* URLImage */,
 			);
 			productName = SpotifyWrapper;
 			productReference = 08CF20B42B673DC20053E7D2 /* SpotifyWrapper.app */;
@@ -152,6 +152,7 @@
 			packageReferences = (
 				08CF20C52B673E160053E7D2 /* XCRemoteSwiftPackageReference "SpotifyAPI" */,
 				08CF20D22B673FA20053E7D2 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				080861262B678D4D00EB6EB7 /* XCRemoteSwiftPackageReference "url-image" */,
 			);
 			productRefGroup = 08CF20B52B673DC20053E7D2 /* Products */;
 			projectDirPath = "";
@@ -184,7 +185,6 @@
 				08CF20CD2B673F340053E7D2 /* Spotify.swift in Sources */,
 				08CF20D12B673F390053E7D2 /* AlertItem.swift in Sources */,
 				08CF20B82B673DC20053E7D2 /* SpotifyWrapperApp.swift in Sources */,
-				080861252B677BBC00EB6EB7 /* TrackCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -313,6 +313,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SpotifyWrapper/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpotifyWrapper/Info.plist;
@@ -343,6 +344,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SpotifyWrapper/Preview Content\"";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SpotifyWrapper/Info.plist;
@@ -389,6 +391,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		080861262B678D4D00EB6EB7 /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		08CF20C52B673E160053E7D2 /* XCRemoteSwiftPackageReference "SpotifyAPI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Peter-Schorn/SpotifyAPI?tab=readme-ov-file#authorizing-with-the-client-credentials-flow";
@@ -408,6 +418,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		080861272B678D4D00EB6EB7 /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 080861262B678D4D00EB6EB7 /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
 		08CF20C62B673E160053E7D2 /* SpotifyAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 08CF20C52B673E160053E7D2 /* XCRemoteSwiftPackageReference "SpotifyAPI" */;

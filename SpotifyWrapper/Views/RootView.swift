@@ -1,6 +1,8 @@
 import SwiftUI
 import Combine
 import SpotifyWebAPI
+import URLImage
+
 
 struct RootView: View {
     
@@ -24,9 +26,14 @@ struct RootView: View {
             Color.black.edgesIgnoringSafeArea(.all)
             
             ScrollView {
+                HStack{
+                    Text("Most Listened To").padding(.horizontal)
+                    Spacer()
+                }.foregroundColor(.white).font(.title).fontWeight(.bold)
+                
                 LazyVStack {
                     ForEach(topTracks, id: \.id) { track in
-                        Text("\(track.name)").foregroundColor(.white)
+                        TrackCard(track: track)
                     }
                 }
                 .padding()
@@ -42,6 +49,7 @@ struct RootView: View {
                 self.retrieveTopTracks()
             }
         }
+        .preferredColorScheme(.dark)
     }
     
     func retrieveTopTracks() {
@@ -70,11 +78,42 @@ struct RootView: View {
                     let topTracks = tracks.items
                         .filter { $0.id != nil }
                     self.topTracks.append(contentsOf: topTracks)
-                    
                 }
+                                       
             )
     }
     
+    struct TrackCard: View {
+        let track: Track
+
+        var body: some View {
+            VStack{
+                RoundedRectangle(cornerRadius: 30).foregroundColor(.black).frame(width: 300, height: 300).overlay(
+                    VStack{
+                        
+                        URLImage((track.album?.images?.first?.url)!) { image in
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 250, height: 250)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .shadow(color: .black, radius: 3, y: 3)
+                        }
+
+                        Text(track.name)
+                            .foregroundColor(.white).font(.system(.headline)).multilineTextAlignment(.center)
+                        if let artists = track.artists {
+                            Text(artists.map { $0.name }.joined(separator: ", "))
+                                .foregroundColor(.white)
+                                .font(.subheadline).multilineTextAlignment(.center)
+                        }
+                    }
+                )
+                
+            }
+            .padding()
+        }
+    }
     
     func handleURL(_ url: URL) {
         guard url.scheme == self.spotify.loginCallbackURL.scheme else {
