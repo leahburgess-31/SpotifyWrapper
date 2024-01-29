@@ -21,6 +21,8 @@ struct RootView: View {
 
     @State private var loadTopTracksCancellable: AnyCancellable? = nil
     
+    @State private var selectedTimeRange: TimeRange = .shortTerm
+    
     
     var body: some View {
         ZStack {
@@ -28,8 +30,16 @@ struct RootView: View {
             
             ScrollView {
                 HStack{
-                    Text("Most Listened To").padding(.horizontal)
+                    Text("Most Listened").padding(.leading)
                     Spacer()
+                    Picker("Time Range", selection: $selectedTimeRange) {
+                        Text("Short Term").tag(TimeRange.shortTerm)
+                        Text("Medium Term").tag(TimeRange.mediumTerm)
+                        Text("Long Term").tag(TimeRange.longTerm)
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    .foregroundColor(.white)
+                    .padding(.trailing)
                 }.foregroundColor(.white).font(.title).fontWeight(.bold)
                 
                 LazyVStack {
@@ -60,6 +70,9 @@ struct RootView: View {
                 self.retrieveTopTracks()
             }
         }
+        .onChange(of: selectedTimeRange) { _ in
+            self.retrieveTopTracks()
+        }
         .preferredColorScheme(.dark)
     }
     
@@ -68,7 +81,7 @@ struct RootView: View {
         self.isLoadingTopTracks = true
         self.topTracks = []
 
-        self.loadTopTracksCancellable = self.spotify.api.currentUserTopTracks(.shortTerm, offset: 0, limit: 10)
+        self.loadTopTracksCancellable = self.spotify.api.currentUserTopTracks(selectedTimeRange, offset: 0, limit: 10)
             .receive(on: RunLoop.main)
             .sink(
                 receiveCompletion: { completion in
