@@ -11,6 +11,7 @@ struct RootView: View {
     @State private var alert: AlertItem? = nil
 
     @State private var cancellables: Set<AnyCancellable> = []
+    @State private var playRequestCancellable: AnyCancellable? = nil
     
     @State private var topTracks: [Track] = []
     
@@ -33,7 +34,17 @@ struct RootView: View {
                 
                 LazyVStack {
                     ForEach(topTracks, id: \.id) { track in
-                        TrackCard(track: track)
+                        TrackCard(track: track).overlay(Button(action: {
+                            playTrack(track: track)
+                        }) {
+                            Image(systemName: "play.circle")
+                                .resizable()
+                                .background(Color.black.opacity(0.5))
+                                .clipShape(Circle())
+                                .frame(width: 100, height: 100)
+                                .foregroundColor(.white)
+                        }
+                        .padding(.top, -60))
                     }
                 }
                 .padding()
@@ -159,6 +170,44 @@ struct RootView: View {
         .store(in: &cancellables)
         
         self.spotify.authorizationState = String.randomURLSafe(length: 128)
+        
+    }
+    
+    func playTrack(track: Track) {
+        
+        let alertTitle = "Couldn't Play \(track.name)"
+
+        guard let trackURI = track.uri else {
+            self.alert = AlertItem(
+                title: alertTitle,
+                message: "missing URI"
+            )
+            return
+        }
+
+        let playbackRequest: PlaybackRequest
+
+        if let albumURI = track.album?.uri {
+            playbackRequest = PlaybackRequest(
+                context: .contextURI(albumURI),
+                offset: .uri(trackURI)
+            )
+        }
+        else {
+            playbackRequest = PlaybackRequest(trackURI)
+        }
+        
+        self.playRequestCancellable =
+            self.spotify.api.getAvailableDeviceThenPlay(playbackRequest)
+                .receive(on: RunLoop.main)
+                .sink(receiveCompletion: { completion in
+                    if case .failure(let error) = completion {
+                        self.alert = AlertItem(
+                            title: alertTitle,
+                            message: error.localizedDescription
+                        )
+                    }
+                })
         
     }
     
